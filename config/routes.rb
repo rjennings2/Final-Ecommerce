@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "categories/show"
   root 'home#index'
-  resources :products
+  resources :products, only: [:index, :show]
   resources :categories, only: [:show]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
