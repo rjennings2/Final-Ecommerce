@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-  get "admins/dashboard"
-  get "admin_sessions/new"
-  get "admin_sessions/create"
-  get "admin_sessions/destroy"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Admin login and logout routes
+  get 'admin/login', to: 'admin_sessions#new', as: 'admin_login'
+  post 'admin/login', to: 'admin_sessions#create'
+  delete 'admin/logout', to: 'admin_sessions#destroy', as: 'admin_logout'
+
+  # Admin dashboard route
+  get 'admin/dashboard', to: 'admins#dashboard', as: 'admin_dashboard'
+
+  # Other routes (e.g., for products, orders, etc.) can go here
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/*
