@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_215836) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_04_224153) do
   create_table "admins", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -33,6 +33,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_215836) do
     t.string "colour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "on_sale"
+    t.boolean "is_new"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
