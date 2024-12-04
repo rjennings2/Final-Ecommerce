@@ -7,6 +7,18 @@
   <%= link_to 'Recently Updated', products_path(recently_updated: true) %>
 </div>
 
+<!-- Search form -->
+<%= form_tag(products_path, method: :get) do %>
+  <%= label_tag :search, "Search for products:" %>
+  <%= text_field_tag :search, params[:search], placeholder: "Enter product name" %>
+
+  <!-- Category filter dropdown -->
+  <%= label_tag :category, "Filter by category:" %>
+  <%= select_tag :category, options_for_select(Category.all.pluck(:category_name, :category_name), params[:category]), include_blank: true %>
+
+  <%= submit_tag "Search" %>
+<% end %>
+
 <div class="products">
   <% @products.each do |product| %>
     <div class="product">

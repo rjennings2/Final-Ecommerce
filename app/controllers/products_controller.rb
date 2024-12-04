@@ -14,6 +14,14 @@ class ProductsController < ApplicationController
       @products = @products.where("updated_at > ?", 1.month.ago)
     end
 
+    if params[:category].present?
+      @products = @products.where(category_id: Category.find_by(category_name: params[:category])&.id)
+    end
+
+    if params[:search].present?
+      @products = @products.where("product_name LIKE ?", "%#{params[:search]}%")
+    end
+
     @products = @products.page(params[:page]).per(5)
   end
 
