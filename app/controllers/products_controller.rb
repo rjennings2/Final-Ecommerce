@@ -2,7 +2,6 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
 
-    # Apply filters if provided
     if params[:on_sale].present?
       @products = @products.where(on_sale: params[:on_sale])
     end
@@ -14,6 +13,8 @@ class ProductsController < ApplicationController
     if params[:recently_updated].present?
       @products = @products.where("updated_at > ?", 1.month.ago)
     end
+
+    @products = @products.page(params[:page]).per(5)
   end
 
   def show
