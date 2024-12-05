@@ -1,6 +1,5 @@
 <div class="container my-5">
   <div class="row">
-    <!-- Product Details Section -->
     <div class="col-md-6">
       <h1 class="display-4 mb-4"><%= @product.product_name %></h1>
 
@@ -10,7 +9,6 @@
       <p><strong>Colour:</strong> <%= @product.colour %></p>
       <p><strong>Category:</strong> <%= @product.category.category_name %></p>
 
-      <!-- "Back to Products" Link -->
       <%= link_to 'Back to Products', products_path, class: 'btn btn-secondary mt-4' %>
     </div>
   </div>

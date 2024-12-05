@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @products = Product.all
-    # @cart = current_cart # Ensure @cart is set for the view
+    # @cart = current_cart
 
     if params[:on_sale].present?
       @products = @products.where(on_sale: params[:on_sale])
@@ -59,7 +59,6 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    # Only allow images in the admin section
     params.require(:product).permit(:product_name, :description, :price, :category_id, images: [])
   end
 end

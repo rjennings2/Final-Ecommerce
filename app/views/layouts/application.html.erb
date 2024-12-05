@@ -23,9 +23,8 @@
   </head>
 
   <body>
-     <!-- Header Section -->
   <header>
-        <!-- Navigation Bar (Menu) -->
+        <!-- navigation  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <%= link_to 'My Atlas Store', root_path, class: 'navbar-brand' %>
@@ -34,13 +33,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <!-- Admin Login -->
+            <!-- admin login -->
             <li class="nav-item">
               <%= link_to 'Admin Login', admin_login_path, class: 'nav-link' %>
             </li>
 
             <% if session[:customer_id] %>
-              <!-- Logged-in User Menu -->
+              <!-- logged-in user menu -->
               <li class="nav-item">
                 <p class="nav-link">You are logged in as <%= Customer.find(session[:customer_id]).username %>.</p>
               </li>
@@ -50,7 +49,7 @@
                 <% end %>
               </li>
             <% else %>
-              <!-- Sign Up and Login Links -->
+              <!-- sign up and login links -->
               <li class="nav-item">
                 <%= link_to 'Sign Up', signup_path, class: 'nav-link' %>
               </li>
@@ -59,7 +58,7 @@
               </li>
             <% end %>
 
-            <!-- View Cart -->
+            <!-- view cart -->
             <li class="nav-item">
               <%= link_to 'View Cart', cart_path, class: 'nav-link' %>
             </li>
@@ -69,12 +68,11 @@
     </nav>
   </header>
 
-  <!-- Main Content Section -->
+  <!-- main content -->
   <main class="container mt-5">
     <%= yield %>
   </main>
 
-  <!-- Footer Section -->
   <footer>
 
   </footer>

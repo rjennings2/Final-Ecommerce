@@ -5,7 +5,6 @@ class CartController < ApplicationController
   end
 
   def checkout
-    # Initialize the checkout process (e.g., get address, payment, etc.)
     @cart = current_cart
     @order = Order.new
   end
@@ -16,7 +15,6 @@ class CartController < ApplicationController
     @order.customer = current_customer
     @order.total_price = calculate_total_price(@cart)
 
-    # Create order items
     @cart.each do |item|
       @order.order_items.build(
         product_id: item[:product_id],
@@ -26,7 +24,7 @@ class CartController < ApplicationController
     end
 
     if @order.save
-      session[:cart] = []  # Clear the cart after order is placed
+      session[:cart] = []
       redirect_to order_path(@order), notice: "Your order has been placed successfully!"
     else
       render :checkout, alert: "There was an issue placing your order."
@@ -43,21 +41,18 @@ class CartController < ApplicationController
     cart.sum { |item| Product.find(item[:product_id]).price * item[:quantity] }
   end
 
-  # Add a product to the cart
   def add
     product = Product.find(params[:product_id])
     add_to_cart(product.id)
     redirect_to cart_path, notice: "#{product.product_name} was added to your cart!"
   end
 
-  # Remove a product from the cart
   def remove
     product = Product.find(params[:product_id])
     remove_from_cart(product.id)
     redirect_to cart_path, notice: "#{product.product_name} was removed from your cart!"
   end
 
-  # Update the quantity of a product in the cart
   def update
     product = Product.find(params[:product_id])
     update_cart(product.id, params[:quantity])
@@ -66,12 +61,10 @@ class CartController < ApplicationController
 
   private
 
-  # Get the current cart stored in session
   def current_cart
     session[:cart] ||= []
   end
 
-  # Add a product to the cart
   def add_to_cart(product_id)
     cart = current_cart
     existing_item = cart.find { |item| item[:product_id] == product_id }
@@ -84,14 +77,12 @@ class CartController < ApplicationController
     session[:cart] = cart
   end
 
-  # Remove a product from the cart
   def remove_from_cart(product_id)
     cart = current_cart
     cart.reject! { |item| item[:product_id] == product_id }
     session[:cart] = cart
   end
 
-  # Update the quantity of a product in the cart
   def update_cart(product_id, quantity)
     cart = current_cart
     item = cart.find { |item| item[:product_id] == product_id }
