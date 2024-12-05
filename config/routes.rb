@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get "admin_sessions/create"
   get "admin_sessions/destroy"
   get "categories/show"
-  root 'home#index'
+  root 'products#index'
   resources :products, only: [:index, :show]
   resources :categories, only: [:show]
 
