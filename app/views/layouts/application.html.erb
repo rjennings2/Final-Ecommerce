@@ -13,11 +13,70 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Forum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Forum&family=Syne:wght@400..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Forum&family=Lora:ital,wght@0,400..700;1,400..700&family=Syne:wght@400..800&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+     <!-- Header Section -->
+  <header>
+        <!-- Navigation Bar (Menu) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <%= link_to 'My Atlas Store', root_path, class: 'navbar-brand' %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <!-- Admin Login -->
+            <li class="nav-item">
+              <%= link_to 'Admin Login', admin_login_path, class: 'nav-link' %>
+            </li>
+
+            <% if session[:customer_id] %>
+              <!-- Logged-in User Menu -->
+              <li class="nav-item">
+                <p class="nav-link">You are logged in as <%= Customer.find(session[:customer_id]).username %>.</p>
+              </li>
+              <li class="nav-item">
+                <%= form_with(url: logout_path, method: :delete, local: true) do %>
+                  <%= submit_tag 'Log Out', class: 'btn btn-outline-danger' %>
+                <% end %>
+              </li>
+            <% else %>
+              <!-- Sign Up and Login Links -->
+              <li class="nav-item">
+                <%= link_to 'Sign Up', signup_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Login', login_path, class: 'nav-link' %>
+              </li>
+            <% end %>
+
+            <!-- View Cart -->
+            <li class="nav-item">
+              <%= link_to 'View Cart', cart_path, class: 'nav-link' %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main class="container mt-5">
     <%= yield %>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+
+  </footer>
   </body>
 </html>

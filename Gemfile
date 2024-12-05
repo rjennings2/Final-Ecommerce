@@ -26,7 +26,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 gem 'kaminari'
 gem 'rails-ujs'
-
+gem 'sassc-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
@@ -61,3 +61,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "bootstrap", "~> 5.3"

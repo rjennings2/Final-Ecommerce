@@ -1,60 +1,57 @@
-<h1>Welcome to Our Product Store</h1>
+<h1 class="page-title">Welcome to Our Product Store</h1>
 
-<p>Browse through our collection of amazing products!</p>
+<p class="page-description">Explore our exclusive collection of high-quality products, designed to cater to your needs!</p>
 
-<%= link_to 'Admin Login', admin_login_path, class: 'btn btn-primary' %>
-
-<% if session[:customer_id] %>
-  <p>You are logged in as <%= Customer.find(session[:customer_id]).username %>.</p>
-  <%= form_with url: logout_path, method: :delete, local: true, autocomplete: "false" do %>
-    <%= submit_tag 'Log Out' %>
-  <% end %>
-<% else %>
-  <%= link_to 'Sign Up', signup_path %> |
-  <%= link_to 'Login', login_path %>
-<% end %>
-
-<%= link_to 'View Cart', cart_path, class: 'btn btn-primary' %>
-
-<h2>All Products</h2>
+<h2 class="section-heading">All Products</h2>
 
 <div class="category-links">
-  <h3>Categories</h3>
-  <% Category.all.each do |category| %>
-    <%= link_to category.category_name, products_path(category: category.category_name) %> |
-  <% end %>
+  <h3>Browse Categories</h3>
+  <div class="categories-list">
+    <% Category.all.each do |category| %>
+      <%= link_to category.category_name, products_path(category: category.category_name), class: 'category-btn' %>
+    <% end %>
+  </div>
 </div>
 
 <div class="filters">
   <h3>Filters</h3>
-  <%= link_to 'On Sale', products_path(on_sale: true) %> |
-  <%= link_to 'New Products', products_path(is_new: true) %> |
-  <%= link_to 'Recently Updated', products_path(recently_updated: true) %>
+  <div class="filters-list">
+    <%= link_to 'On Sale', products_path(on_sale: true), class: 'filter-btn' %>
+    <%= link_to 'New Products', products_path(is_new: true), class: 'filter-btn' %>
+    <%= link_to 'Recently Updated', products_path(recently_updated: true), class: 'filter-btn' %>
+  </div>
 </div>
 
-<!-- Search form -->
-<%= form_tag(products_path, method: :get) do %>
-  <%= label_tag :search, "Search for products:" %>
-  <%= text_field_tag :search, params[:search], placeholder: "Enter product name" %>
-
-  <!-- Category filter dropdown -->
-  <%= label_tag :category, "Filter by category:" %>
-  <%= select_tag :category, options_for_select(Category.all.pluck(:category_name, :category_name), params[:category]), include_blank: true %>
-
-  <%= submit_tag "Search" %>
-<% end %>
-
-<div class="products">
-  <% @products.each do |product| %>
-    <div class="product">
-      <h3><%= link_to product.product_name, product_path(product) %></h3>
-      <p><%= product.description.truncate(100) %></p>
-      <p><%= number_to_currency(product.price) %></p>
-      <%= form_with(url: add_cart_path(product_id: product.id), method: :post, local: true) do |f| %>
-        <%= f.submit 'Add to Cart' %>
-      <% end %>
+<!-- Search Form -->
+<div class="search-form">
+  <%= form_tag(products_path, method: :get) do %>
+    <div class="form-group">
+      <%= label_tag :search, "Search Products", class: 'form-label' %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search for products...", class: 'form-control' %>
     </div>
+    <div class="form-group">
+      <%= label_tag :category, "Filter by category", class: 'form-label' %>
+      <%= select_tag :category, options_for_select(Category.all.pluck(:category_name, :category_name), params[:category]), include_blank: true, class: 'form-select' %>
+    </div>
+    <%= submit_tag "Search", class: 'btn btn-dark' %>
   <% end %>
+</div>
+
+<div class="product-list">
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4 col-lg-3 mb-4">
+        <div class="product-card">
+          <h3 class="product-title"><%= link_to product.product_name, product_path(product) %></h3>
+          <p class="product-description"><%= product.description.truncate(100) %></p>
+          <p class="product-price"><%= number_to_currency(product.price) %></p>
+          <%= form_with(url: add_cart_path(product_id: product.id), method: :post, local: true) do |f| %>
+            <%= f.submit 'Add to Cart', class: 'btn btn-primary add-to-cart-btn' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <div class="pagination">
