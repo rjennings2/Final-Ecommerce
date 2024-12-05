@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @products = Product.all
+    @cart = current_cart # Ensure @cart is set for the view
 
     if params[:on_sale].present?
       @products = @products.where(on_sale: params[:on_sale])
