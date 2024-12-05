@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
   belongs_to :province
+  has_one :cart, dependent: :destroy
 
   has_secure_password
 

@@ -1,94 +1,60 @@
 class CartController < ApplicationController
-  def show
-    @cart = current_cart
-    @products = Product.where(id: @cart.map { |item| item[:product_id] })
-  end
-
-  def checkout
-    @cart = current_cart
-    @order = Order.new
-  end
-
-  def place_order
-    @cart = current_cart
-    @order = Order.new(order_params)
-    @order.customer = current_customer
-    @order.total_price = calculate_total_price(@cart)
-
-    @cart.each do |item|
-      @order.order_items.build(
-        product_id: item[:product_id],
-        quantity: item[:quantity],
-        price: Product.find(item[:product_id]).price
-      )
-    end
-
-    if @order.save
-      session[:cart] = []
-      redirect_to order_path(@order), notice: "Your order has been placed successfully!"
-    else
-      render :checkout, alert: "There was an issue placing your order."
-    end
-  end
-
-  private
-
-  def order_params
-    params.require(:order).permit(:shipping_address, :status)
-  end
-
-  def calculate_total_price(cart)
-    cart.sum { |item| Product.find(item[:product_id]).price * item[:quantity] }
-  end
+  before_action :set_cart, only: [:show, :add]
 
   def add
     product = Product.find(params[:product_id])
-    add_to_cart(product.id)
-    redirect_to cart_path, notice: "#{product.product_name} was added to your cart!"
+    cart_item = @cart.cart_items.find_or_initialize_by(product: product)
+    cart_item.update_attribute(:quantity, (cart_item.quantity || 0) + 1)
+    cart_item.save
+    redirect_to cart_path(@cart)
+  end
+
+  def show
+    @cart_items = @cart.cart_items
   end
 
   def remove
     product = Product.find(params[:product_id])
-    remove_from_cart(product.id)
-    redirect_to cart_path, notice: "#{product.product_name} was removed from your cart!"
+    cart_item = @cart.cart_items.find_by(product: product)
+    cart_item.destroy if cart_item
+    redirect_to cart_path
   end
 
   def update
-    product = Product.find(params[:product_id])
-    update_cart(product.id, params[:quantity])
-    redirect_to cart_path, notice: "Cart updated!"
+    cart_item = @cart.cart_items.find(params[:cart_item_id])
+    if cart_item.update(cart_item_params)
+      redirect_to cart_path
+    else
+      render :show
+    end
+  end
+
+  def checkout
+    @cart = current_customer.cart
+    @customer = current_customer
+  end
+
+  def place_order
+    @cart = current_customer.cart
+
+    if @cart.cart_items.empty?
+      redirect_to cart_path, alert: "Your cart is empty. Please add items before proceeding."
+    else
+      # Just print confirmation to the server log (optional)
+      puts "Order Confirmed! Thank you for shopping with us!"
+
+      # Redirect to a confirmation page or show a success message
+      redirect_to order_confirmed_path, notice: "Your order has been confirmed! Thank you for shopping with us."
+    end
   end
 
   private
 
-  def current_cart
-    session[:cart] ||= []
+  def set_cart
+    @cart = current_customer ? current_customer.cart || current_customer.create_cart(status: 'active') : Cart.create(status: 'active')
   end
 
-  def add_to_cart(product_id)
-    cart = current_cart
-    existing_item = cart.find { |item| item[:product_id] == product_id }
-
-    if existing_item
-      existing_item[:quantity] += 1
-    else
-      cart << { product_id: product_id, quantity: 1 }
-    end
-    session[:cart] = cart
-  end
-
-  def remove_from_cart(product_id)
-    cart = current_cart
-    cart.reject! { |item| item[:product_id] == product_id }
-    session[:cart] = cart
-  end
-
-  def update_cart(product_id, quantity)
-    cart = current_cart
-    item = cart.find { |item| item[:product_id] == product_id }
-    if item
-      item[:quantity] = quantity.to_i
-      session[:cart] = cart
-    end
+  def cart_item_params
+    params.require(:cart_item).permit(:quantity)
   end
 end

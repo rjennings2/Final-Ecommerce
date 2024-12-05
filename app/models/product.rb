@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   belongs_to :category
   has_many_attached :images
+  has_many :cart_items
+  has_many :carts, through: :cart_items
 
   validates :product_name, presence: true, length: { maximum: 255 }
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }

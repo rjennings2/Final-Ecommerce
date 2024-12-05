@@ -45,8 +45,8 @@
           <h3 class="product-title"><%= link_to product.product_name, product_path(product) %></h3>
           <p class="product-description"><%= product.description.truncate(100) %></p>
           <p class="product-price"><%= number_to_currency(product.price) %></p>
-          <%= form_with(url: add_cart_path(product_id: product.id), method: :post, local: true) do |f| %>
-          <%= f.submit 'Add to Cart', class: 'btn btn-primary add-to-cart-btn' %>
+          <%= form_with(url: add_to_cart_cart_index_path(product_id: product.id), method: :post, local: true) do |f| %>
+            <%= f.submit 'Add to Cart', class: 'btn btn-primary add-to-cart-btn' %>
           <% end %>
           <% if product.images.attached? %>
             <div class="product-images">

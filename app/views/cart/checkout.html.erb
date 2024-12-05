@@ -1,35 +1,25 @@
 <h1>Checkout</h1>
-
-<p>Your Cart:</p>
-<table>
-  <thead>
-    <tr>
-      <th>Product Name</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cart.each do |item| %>
-      <tr>
-        <td><%= Product.find(item[:product_id]).product_name %></td>
-        <td><%= number_to_currency(Product.find(item[:product_id]).price) %></td>
-        <td><%= item[:quantity] %></td>
-        <td><%= number_to_currency(Product.find(item[:product_id]).price * item[:quantity]) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h3>Shipping Address</h3>
-<%= form_with model: @order, url: place_order_cart_path, method: :post do |f| %>
-  <div>
-    <%= f.label :shipping_address, "Enter your shipping address" %>
-    <%= f.text_area :shipping_address, rows: 3 %>
+<%= form_with model: @order, url: place_order_cart_index_path, local: true do |f| %>
+  <!-- Pre-fill the address fields from the @customer object -->
+  <div class="field">
+    <%= f.label :address, "Street Address" %>
+    <%= f.text_field :address, value: @customer.street, required: true %>
   </div>
 
-  <div>
-    <%= f.submit "Place Order" %>
+  <div class="field">
+    <%= f.label :city, "City" %>
+    <%= f.text_field :city, value: @customer.city, required: true %>
   </div>
+
+  <div class="field">
+    <%= f.label :house_number, "House Number" %>
+    <%= f.text_field :house_number, value: @customer.house_number, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :province, "Province" %>
+    <%= f.collection_select :province_id, Province.all, :id, :name, { prompt: 'Select Province' }, class: 'form-select' %>
+  </div>
+
+  <%= f.submit "Place Order", class: 'btn btn-primary' %>
 <% end %>
