@@ -1,0 +1,36 @@
+<h1>Your Invoice</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.product_name %></td>
+        <td><%= number_to_currency(product.price) %></td>
+        <td><%= @cart.find { |item| item[:product_id] == product.id }[:quantity] %></td>
+        <td><%= number_to_currency(product.price * @cart.find { |item| item[:product_id] == product.id }[:quantity]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Taxes</h3>
+<p>GST: <%= number_to_currency(@taxes[:gst]) %></p>
+<p>PST: <%= number_to_currency(@taxes[:pst]) %></p>
+<p>HST: <%= number_to_currency(@taxes[:hst]) %></p>
+
+<h3>Total: <%= number_to_currency(@total_with_taxes) %></h3>
+
+<h3>Shipping Address</h3>
+<p><%= current_customer.address %></p>
+
+<%= form_with model: @order, url: orders_path, method: :post do |f| %>
+  <%= f.submit 'Place Order' %>
+<% end %>

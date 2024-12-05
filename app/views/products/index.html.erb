@@ -14,6 +14,8 @@
   <%= link_to 'Login', login_path %>
 <% end %>
 
+<%= link_to 'View Cart', cart_path, class: 'btn btn-primary' %>
+
 <h2>All Products</h2>
 
 <div class="category-links">
@@ -48,7 +50,7 @@
       <h3><%= link_to product.product_name, product_path(product) %></h3>
       <p><%= product.description.truncate(100) %></p>
       <p><%= number_to_currency(product.price) %></p>
-      <%= form_with(url: add_cart_path(product_id: product.id), method: :post) do |f| %>
+      <%= form_with(url: add_cart_path(product_id: product.id), method: :post, local: true) do |f| %>
         <%= f.submit 'Add to Cart' %>
       <% end %>
     </div>

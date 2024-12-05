@@ -16,13 +16,10 @@ Rails.application.routes.draw do
 
   get 'admin/dashboard', to: 'admins#dashboard', as: 'admin_dashboard'
 
-  resource :cart, only: [:show], controller: 'cart' do
-    collection do
-      post 'add/:product_id', to: 'cart#add', as: :add  # Use product_id as a dynamic segment
-      delete 'remove/:product_id', to: 'cart#remove', as: :remove
-      patch 'update/:product_id', to: 'cart#update', as: :update
-    end
-  end
+  get 'cart/show', to: 'cart#show', as: 'cart'
+  post 'cart/add', to: 'cart#add', as: 'add_cart'
+  delete 'cart/remove/:product_id', to: 'cart#remove', as: 'remove_cart'
+  patch 'cart/update/:product_id', to: 'cart#update', as: 'update_cart'
 
   namespace :admin do
     resources :products, only: [:index, :new, :create, :edit, :update, :destroy]
@@ -33,6 +30,12 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
+
+  resources :orders, only: [:show]
+  resources :cart, only: [:show] do
+    get 'checkout', on: :collection
+    post 'place_order', on: :collection
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

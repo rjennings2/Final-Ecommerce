@@ -15,18 +15,22 @@
         <tr>
           <td><%= product.product_name %></td>
           <td><%= number_to_currency(product.price) %></td>
-          <td><%= @cart.find { |item| item[:product_id] == product.id }[:quantity] %></td>
           <td>
-            <%= link_to 'Remove', remove_cart_path(product_id: product.id), method: :delete %> |
-            <%= form_with url: update_cart_path(product_id: product.id), method: :patch do |f| %>
+            <%= form_with(url: update_cart_path(product_id: product.id), method: :patch, local: true) do |f| %>
               <%= f.number_field :quantity, value: @cart.find { |item| item[:product_id] == product.id }[:quantity], min: 1 %>
               <%= f.submit 'Update' %>
             <% end %>
+          </td>
+          <td>
+            <%= link_to 'Remove', remove_cart_path(product_id: product.id), method: :delete, data: { confirm: 'Are you sure you want to remove this item from your cart?' } %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <%= link_to 'Checkout', checkout_cart_path, class: 'btn btn-primary' %>
 <% else %>
   <p>Your cart is empty.</p>
+  <%= link_to 'Checkout', checkout_cart_index_path, class: 'btn btn-primary' %>
 <% end %>

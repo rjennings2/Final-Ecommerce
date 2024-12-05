@@ -1,0 +1,35 @@
+<h1>Checkout</h1>
+
+<p>Your Cart:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cart.each do |item| %>
+      <tr>
+        <td><%= Product.find(item[:product_id]).product_name %></td>
+        <td><%= number_to_currency(Product.find(item[:product_id]).price) %></td>
+        <td><%= item[:quantity] %></td>
+        <td><%= number_to_currency(Product.find(item[:product_id]).price * item[:quantity]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Shipping Address</h3>
+<%= form_with model: @order, url: place_order_cart_path, method: :post do |f| %>
+  <div>
+    <%= f.label :shipping_address, "Enter your shipping address" %>
+    <%= f.text_area :shipping_address, rows: 3 %>
+  </div>
+
+  <div>
+    <%= f.submit "Place Order" %>
+  </div>
+<% end %>
