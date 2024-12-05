@@ -1,4 +1,16 @@
-<%= form_with model: @customer, local: true do |form| %>
+<h1>Sign Up</h1>
+
+<%= form_with model: @customer, url: signup_path, local: true do |form| %>
+  <% if @customer.errors.any? %>
+    <div style="color: red;">
+      <ul>
+        <% @customer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div>
     <%= form.label :username %>
     <%= form.text_field :username %>

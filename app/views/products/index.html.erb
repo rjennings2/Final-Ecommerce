@@ -4,11 +4,14 @@
 
 <%= link_to 'Admin Login', admin_login_path, class: 'btn btn-primary' %>
 
-<% if @cart.any? %>
-  <!-- Display a link to view the cart -->
-  <%= link_to "View Cart (#{@cart.size} items)", cart_path %>
+<% if session[:customer_id] %>
+  <p>You are logged in as <%= Customer.find(session[:customer_id]).username %>.</p>
+  <%= form_with url: logout_path, method: :delete, local: true do %>
+    <%= submit_tag 'Log Out' %>
+  <% end %>
 <% else %>
-  <p>Your cart is empty.</p>
+  <%= link_to 'Sign Up', signup_path %> |
+  <%= link_to 'Login', login_path %>
 <% end %>
 
 <h2>All Products</h2>

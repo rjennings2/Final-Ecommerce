@@ -10,7 +10,7 @@ class CartController < ApplicationController
   # Add a product to the cart
   def add
     product = Product.find(params[:product_id])
-    add_to_cart(product.id)  # Add product to the cart
+    add_cart_path(product.id)  # Add product to the cart
     redirect_to cart_path, notice: "#{product.product_name} was added to your cart!"
   end
 

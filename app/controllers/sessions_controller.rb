@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    customer = Customer.find_by(username: params[:username])
-    if customer&.authenticate(params[:password])
-      session[:customer_id] = customer.id # Set session to log in
+    @customer = Customer.find_by(username: params[:username])
+    if @customer && @customer.authenticate(params[:password])
+      session[:customer_id] = @customer.id # Set session to log in
       redirect_to root_path, notice: "Logged in successfully!"
     else
       flash.now[:alert] = "Invalid username or password"
