@@ -16,6 +16,14 @@ Rails.application.routes.draw do
 
   get 'admin/dashboard', to: 'admins#dashboard', as: 'admin_dashboard'
 
+  resource :cart, only: [:show], controller: 'cart' do
+    collection do
+      post 'add/:product_id', to: 'cart#add', as: :add  # Use product_id as a dynamic segment
+      delete 'remove/:product_id', to: 'cart#remove', as: :remove
+      patch 'update/:product_id', to: 'cart#update', as: :update
+    end
+  end
+
   namespace :admin do
     resources :products, only: [:index, :new, :create, :edit, :update, :destroy]
   end
