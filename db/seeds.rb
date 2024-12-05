@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Admin.create(username: 'admin', password: 'password')
+
 sports_bras = Category.create(category_name: "Sports Bras")
 leggings = Category.create(category_name: "Leggings")
 shorts = Category.create(category_name: "Shorts")

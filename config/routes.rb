@@ -1,8 +1,20 @@
 Rails.application.routes.draw do
+  get "admins/dashboard"
+  get "admin_sessions/new"
+  get "admin_sessions/create"
+  get "admin_sessions/destroy"
   get "categories/show"
   root 'home#index'
   resources :products, only: [:index, :show]
   resources :categories, only: [:show]
+
+  get 'admin/login', to: 'admin_sessions#new', as: 'admin_login'
+  post 'admin/login', to: 'admin_sessions#create'
+  delete 'admin/logout', to: 'admin_sessions#destroy', as: 'admin_logout'
+
+
+
+  get 'admin/dashboard', to: 'admins#dashboard', as: 'admin_dashboard'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
