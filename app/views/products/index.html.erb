@@ -46,7 +46,14 @@
           <p class="product-description"><%= product.description.truncate(100) %></p>
           <p class="product-price"><%= number_to_currency(product.price) %></p>
           <%= form_with(url: add_cart_path(product_id: product.id), method: :post, local: true) do |f| %>
-            <%= f.submit 'Add to Cart', class: 'btn btn-primary add-to-cart-btn' %>
+          <%= f.submit 'Add to Cart', class: 'btn btn-primary add-to-cart-btn' %>
+          <% end %>
+          <% if product.images.attached? %>
+            <div class="product-images">
+              <% product.images.each do |image| %>
+                <%= image_tag image, alt: product.product_name, class: "product-image" %>
+              <% end %>
+            </div>
           <% end %>
         </div>
       </div>

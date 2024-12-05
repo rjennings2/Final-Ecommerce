@@ -7,4 +7,8 @@
 <p><strong>Size:</strong> <%= @product.size %></p>
 <p><strong>Color:</strong> <%= @product.colour %></p>
 
+<% @product.images.each do |image| %>
+  <%= image_tag image %>
+<% end %>
+
 <%= link_to 'Back to Products', admin_products_path %>

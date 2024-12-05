@@ -29,6 +29,11 @@
     <%= f.text_field :colour, class: 'form-control' %>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :images, "Upload images" %>
+    <%= f.file_field :images, multiple: true, class: "form-control" %>
+  </div>
+
   <div class="mb-3 text-center">
     <%= f.submit 'Save Product', class: 'btn btn-primary' %>
   </div>
