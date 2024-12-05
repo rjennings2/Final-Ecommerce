@@ -1,0 +1,26 @@
+<h1>Products</h1>
+<%= link_to 'Add New Product', new_admin_product_path, class: 'btn btn-primary' %>
+<%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'btn btn-secondary' %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.product_name %></td>
+        <td><%= product.category&.category_name %></td>
+        <td><%= product.price %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_product_path(product) %>
+          <%= link_to 'Delete', admin_product_path(product), method: :delete, data: { turbo_action: 'replace', turbo_frame: 'products' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

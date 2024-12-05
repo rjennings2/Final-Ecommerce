@@ -1,0 +1,10 @@
+<h1>Product Details</h1>
+
+<p><strong>Product Name:</strong> <%= @product.product_name %></p>
+<p><strong>Category:</strong> <%= @product.category.name %></p> <!-- Assuming category has a 'name' attribute -->
+<p><strong>Description:</strong> <%= @product.description %></p>
+<p><strong>Price:</strong> $<%= @product.price %></p>
+<p><strong>Size:</strong> <%= @product.size %></p>
+<p><strong>Color:</strong> <%= @product.colour %></p>
+
+<%= link_to 'Back to Products', admin_products_path %>
