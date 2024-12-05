@@ -1,26 +1,36 @@
-<h1>Products</h1>
-<%= link_to 'Add New Product', new_admin_product_path, class: 'btn btn-primary' %>
-<%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'btn btn-secondary' %>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.product_name %></td>
-        <td><%= product.category&.category_name %></td>
-        <td><%= product.price %></td>
-        <td>
-          <%= link_to 'Edit', edit_admin_product_path(product) %>
-          <%= link_to 'Delete', admin_product_path(product), method: :delete, data: { turbo_action: 'replace', turbo_frame: 'products' }, class: 'btn btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container my-5">
+  <h1 class="text-center mb-4">Products</h1>
+
+  <!-- Buttons for adding new product and going back to the dashboard -->
+  <div class="d-flex justify-content-between mb-4">
+    <%= link_to 'Add New Product', new_admin_product_path, class: 'btn btn-primary' %>
+    <%= link_to 'Back to Dashboard', admin_dashboard_path, class: 'btn btn-secondary' %>
+  </div>
+
+  <!-- Products Table -->
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.product_name %></td>
+            <td><%= product.category&.category_name %></td>
+            <td><%= number_to_currency(product.price) %></td>
+            <td>
+              <%= link_to 'Edit', edit_admin_product_path(product), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Delete', admin_product_path(product), method: :delete, data: { turbo_action: 'replace', turbo_frame: 'products' }, class: 'btn btn-danger btn-sm' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

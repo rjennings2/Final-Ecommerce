@@ -1,36 +1,44 @@
 <h1>Your Cart</h1>
 
 <% if @products.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @products.each do |product| %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td><%= product.product_name %></td>
-          <td><%= number_to_currency(product.price) %></td>
-          <td>
-            <%= form_with(url: update_cart_path(product_id: product.id), method: :patch, local: true) do |f| %>
-              <%= f.number_field :quantity, value: @cart.find { |item| item[:product_id] == product.id }[:quantity], min: 1 %>
-              <%= f.submit 'Update' %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to 'Remove', remove_cart_path(product_id: product.id), method: :delete, data: { confirm: 'Are you sure you want to remove this item from your cart?' } %>
-          </td>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.product_name %></td>
+            <td><%= number_to_currency(product.price) %></td>
+            <td>
+              <%= form_with(url: update_cart_path(product_id: product.id), method: :patch, local: true) do |f| %>
+                <div class="input-group">
+                  <%= f.number_field :quantity, value: @cart.find { |item| item[:product_id] == product.id }[:quantity], min: 1, class: 'form-control' %>
+                  <div class="input-group-append">
+                    <%= f.submit 'Update', class: 'btn btn-warning' %>
+                  </div>
+                </div>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to 'Remove', remove_cart_path(product_id: product.id), method: :delete, data: { confirm: 'Are you sure you want to remove this item from your cart?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-  <%= link_to 'Checkout', checkout_cart_path, class: 'btn btn-primary' %>
+  <div class="text-center">
+    <%= link_to 'Checkout', checkout_cart_path, class: 'btn btn-success btn-lg' %>
+  </div>
 <% else %>
   <p>Your cart is empty.</p>
-  <%= link_to 'Checkout', checkout_cart_index_path, class: 'btn btn-primary' %>
+  <%= link_to 'Continue Shopping', products_path, class: 'btn btn-primary' %>
 <% end %>

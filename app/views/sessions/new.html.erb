@@ -1,21 +1,23 @@
 <h1>Login</h1>
 
-<%= form_with url: login_path, local: true do |form| %>
+<%= form_with url: login_path, local: true, html: { class: 'login-form' } do |form| %>
   <% if flash[:alert] %>
-    <div style="color: red;">
+    <div class="alert alert-danger">
       <%= flash[:alert] %>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :username %>
-    <%= form.text_field :username %>
+  <div class="mb-3">
+    <%= form.label :username, class: 'form-label' %>
+    <%= form.text_field :username, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :password %>
-    <%= form.password_field :password %>
+  <div class="mb-3">
+    <%= form.label :password, class: 'form-label' %>
+    <%= form.password_field :password, class: 'form-control' %>
   </div>
 
-  <%= form.submit "Login" %>
+  <div class="mb-3 text-center">
+    <%= form.submit "Login", class: 'btn btn-primary' %>
+  </div>
 <% end %>

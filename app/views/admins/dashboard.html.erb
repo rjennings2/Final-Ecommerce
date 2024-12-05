@@ -1,3 +1,25 @@
-<h1>Welcome to the Admin Dashboard</h1>
-<%= link_to 'Manage Products', admin_products_path %>
-<%= link_to 'Logout', admin_logout_path, method: :delete, data: { turbo_method: :delete } %>
+<div class="container my-5">
+  <div class="row">
+    <!-- Admin Dashboard Title -->
+    <div class="col-12 text-center mb-4">
+      <h1 class="display-3">Welcome to the Admin Dashboard</h1>
+    </div>
+
+    <!-- Admin Links Section -->
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <%= link_to 'Manage Products', admin_products_path %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <%= link_to 'Logout', admin_logout_path, method: :delete, data: { turbo_method: :delete } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
