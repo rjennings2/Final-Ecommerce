@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "customers/new"
+  get "customers/create"
   get "admins/dashboard"
   get "admin_sessions/new"
   get "admin_sessions/create"
@@ -17,6 +19,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :products, only: [:index, :new, :create, :edit, :update, :destroy]
   end
+
+  get 'signup', to: 'customers#new'
+  post 'signup', to: 'customers#create'
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
