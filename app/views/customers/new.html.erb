@@ -26,5 +26,26 @@
     <%= form.password_field :password_confirmation %>
   </div>
 
+   <!-- Address fields -->
+  <div>
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :street %>
+    <%= form.text_field :street %>
+  </div>
+
+  <div>
+    <%= form.label :house_number %>
+    <%= form.text_field :house_number %>
+  </div>
+
+  <div>
+    <%= form.label :province_id %>
+    <%= form.collection_select :province_id, Province.all, :id, :name, prompt: "Select Province" %>
+  </div>
+
   <%= form.submit "Sign Up" %>
 <% end %>

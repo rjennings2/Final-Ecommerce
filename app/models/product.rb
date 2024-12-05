@@ -1,5 +1,9 @@
 class Product < ApplicationRecord
   belongs_to :category
 
-  validates :product_name, :price, :size, :colour, :description, presence: true
+  validates :product_name, presence: true, length: { maximum: 255 }
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :size, presence: true, inclusion: { in: %w(S M L), message: "%{value} is not a valid size" }
+  validates :colour, presence: true, format: { with: /\A[a-zA-Z\s]+\z/, message: "can only contain letters and spaces" }
+  validates :description, presence: true, length: { maximum: 1000 }
 end

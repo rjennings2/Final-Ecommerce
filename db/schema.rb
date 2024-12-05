@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_05_061744) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_05_073826) do
   create_table "admins", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -29,6 +29,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_061744) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "city"
+    t.string "street"
+    t.string "house_number"
+    t.string "province"
+    t.integer "province_id"
+    t.index ["province_id"], name: "index_customers_on_province_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -45,5 +51,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_05_061744) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "customers", "provinces"
   add_foreign_key "products", "categories"
 end

@@ -6,7 +6,7 @@
 
 <% if session[:customer_id] %>
   <p>You are logged in as <%= Customer.find(session[:customer_id]).username %>.</p>
-  <%= form_with url: logout_path, method: :delete, local: true do %>
+  <%= form_with url: logout_path, method: :delete, local: true, autocomplete: "false" do %>
     <%= submit_tag 'Log Out' %>
   <% end %>
 <% else %>
