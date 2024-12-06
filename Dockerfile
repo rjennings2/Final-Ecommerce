@@ -2,21 +2,21 @@
 FROM ruby:3.1
 
 # Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y \
+  nodejs \
+  postgresql-client \
+  yarn
 
 # Set the working directory
 WORKDIR /myapp
 
-# Install Rails and other dependencies
+# Install Rails dependencies (Gemfile & Gemfile.lock)
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 
-# Copy the rest of your app's code
+# Copy the rest of your application code
 COPY . /myapp
-
-# Precompile assets (optional but recommended for production)
-RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 # Expose the default Rails port
 EXPOSE 3000

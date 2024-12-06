@@ -1,6 +1,5 @@
 <h1>Checkout</h1>
 <%= form_with model: @order, url: place_order_cart_index_path, local: true do |f| %>
-  <!-- Pre-fill the address fields from the @customer object -->
   <div class="field">
     <%= f.label :address, "Street Address" %>
     <%= f.text_field :address, value: @customer.street, required: true %>

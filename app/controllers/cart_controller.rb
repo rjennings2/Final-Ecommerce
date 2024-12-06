@@ -40,10 +40,8 @@ class CartController < ApplicationController
     if @cart.cart_items.empty?
       redirect_to cart_path, alert: "Your cart is empty. Please add items before proceeding."
     else
-      # Just print confirmation to the server log (optional)
       puts "Order Confirmed! Thank you for shopping with us!"
 
-      # Redirect to a confirmation page or show a success message
       redirect_to order_confirmed_path, notice: "Your order has been confirmed! Thank you for shopping with us."
     end
   end

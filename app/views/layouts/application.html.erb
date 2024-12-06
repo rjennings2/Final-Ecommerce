@@ -59,7 +59,7 @@
                 <% if current_customer && current_customer.cart %>
                   <%= link_to 'View Cart', cart_path(current_customer.cart), class: 'nav-link' %>
                 <% else %>
-                  <%= link_to 'View Cart', login_path, class: 'nav-link' %> <!-- Redirect to login if not logged in -->
+                  <%= link_to 'View Cart', login_path, class: 'nav-link' %>
                 <% end %>
               </li>
             </ul>

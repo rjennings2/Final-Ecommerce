@@ -44,6 +44,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  def confirmed
+    @cart_items = current_cart.map do |item|
+      product = Product.find(item[:product_id])
+      {
+        product: product,
+        quantity: item[:quantity],
+        subtotal: product.price * item[:quantity]
+      }
+    end
+  end
+
   private
 
   def set_order
